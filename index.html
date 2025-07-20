@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="fn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Wordly</title>
+    <link rel="stylesheet" href="./src/output.css">
+    <link rel="stylesheet" href="./src/style.css">
+    <script type="module" src="src/script.js" defer></script>
+</head>
+<body class="bg-(--bg-main) transition relative w-full h-dvh grid place-items-center font-Exo-2 overflow-hidden">
+
+<!-- SVGs-->
+<symbol class="hidden">
+    <svg id="x-mark" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+         stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/>
+    </svg>
+    <svg id="retry" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+         stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/>
+    </svg>
+    <svg id="play-sound" xmlns="http://www.w3.org/2000/svg" fill="" viewBox="0 0 24 24" stroke-width="1.5"
+         stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round"
+              d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z"/>
+    </svg>
+    <svg id="progress" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path fill-rule="evenodd"
+              d="M4.755 10.059a7.5 7.5 0 0 1 12.548-3.364l1.903 1.903h-3.183a.75.75 0 1 0 0 1.5h4.992a.75.75 0 0 0 .75-.75V4.356a.75.75 0 0 0-1.5 0v3.18l-1.9-1.9A9 9 0 0 0 3.306 9.67a.75.75 0 1 0 1.45.388Zm15.408 3.352a.75.75 0 0 0-.919.53 7.5 7.5 0 0 1-12.548 3.364l-1.902-1.903h3.183a.75.75 0 0 0 0-1.5H2.984a.75.75 0 0 0-.75.75v4.992a.75.75 0 0 0 1.5 0v-3.18l1.9 1.9a9 9 0 0 0 15.059-4.035.75.75 0 0 0-.53-.918Z"
+              clip-rule="evenodd"/>
+    </svg>
+    <svg id="error" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+         stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round"
+              d="M12 9v3.75m0-10.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.75c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.75h-.152c-3.196 0-6.1-1.25-8.25-3.286Zm0 13.036h.008v.008H12v-.008Z"/>
+    </svg>
+
+
+</symbol>
+
+<!-- Audio -->
+<audio class="hidden" id="word-audio"></audio>
+
+<!-- Overlay -->
+<div id="overlay" class="hide absolute inset-0 z-30 backdrop-blur-xs backdrop-grayscale-25"></div>
+
+<!-- App Theme -->
+<div id="open-theme-modal" class="fixed top-10 right-10 text-white">
+    <div class="bg-white text-base md:text-lg lg:text-xl cursor-pointer transition font-semibold tracking-wide shadow-2xl rounded-full flex items-center justify-center gap-x-1.5 py-1 px-1.5 transform hover:scale-105">
+        <span id="color-name" class="text-(--text-main)">Violet</span>
+        <span id="color" class="rounded-full w-7 h-7 lg:w-8 lg:h-8 bg-(--bg-main)"></span>
+    </div>
+</div>
+
+<!-- Choose App Theme Modal -->
+<div id="app-theme-modal"
+     class="hide-app-theme-modal transition-all duration-200 absolute top-1/12 inset-x-0 mx-auto w-4/5 sm:w-3/4 lg:w-1/2 2xl:w-1/3 rounded-2xl bg-white z-40 text-center py-2 px-4 transform">
+    <!--  Header  -->
+    <div class="flex items-center justify-between border-b-2 border-b-(--text-main) pb-2 lg:pb-4">
+        <div class="text-sm sm:text-base lg:text-lg 2xl:text-xl text-(--text-main) font-semibold">Select Your Favorite
+            Color For App Theme
+        </div>
+        <svg id="close-theme-modal-x" class="cursor-pointer min-w-8 min-h-8 max-w-8 max-h-8 text-(--text-main)">
+            <use href="#x-mark"></use>
+        </svg>
+    </div>
+
+    <!--  Main  -->
+    <div class="grid grid-cols-2 gap-3 mt-5">
+        <span data-main="oklch(58.6% 0.253 17.585)" data-text="oklch(45.5% 0.188 13.697)"
+              class="change-theme-btn bg-white text-sm sm:text-base lg:text-lg 2xl:text-xl cursor-pointer text-black shadow-2xl shadow-black/50 font-semibold tracking-wide rounded-full flex items-center justify-between gap-x-1.5 py-1 px-2.5">
+            <span class="text-rose-800">Rose</span>
+            <span class="rounded-full w-8 h-8 bg-rose-600"></span>
+        </span>
+
+        <span data-main="oklch(58.8% 0.158 241.966)" data-text="oklch(44.3% 0.11 240.79)"
+              class="change-theme-btn bg-white text-sm sm:text-base lg:text-lg 2xl:text-xl cursor-pointer text-black shadow-2xl shadow-black/50 font-semibold tracking-wide rounded-full flex items-center justify-between gap-x-1.5 py-1 px-2.5">
+            <span class="text-sky-800">Sky</span>
+            <span class="rounded-full w-8 h-8 bg-sky-600"></span>
+        </span>
+
+        <span data-main="oklch(59.6% 0.145 163.225)" data-text="oklch(43.2% 0.095 166.913)"
+              class="change-theme-btn bg-white text-sm sm:text-base lg:text-lg 2xl:text-xl cursor-pointer text-black shadow-2xl shadow-black/50 font-semibold tracking-wide rounded-full flex items-center justify-between gap-x-1.5 py-1 px-2.5">
+            <span class="text-emerald-800">Emerald</span>
+            <span class="rounded-full w-8 h-8 bg-emerald-600"></span>
+        </span>
+
+        <span data-main="oklch(68.1% 0.162 75.834)" data-text="oklch(47.6% 0.114 61.907)"
+              class="change-theme-btn bg-white text-sm sm:text-base lg:text-lg 2xl:text-xl cursor-pointer text-black shadow-2xl shadow-black/50 font-semibold tracking-wide rounded-full flex items-center justify-between gap-x-1.5 py-1 px-2.5">
+            <span class="text-yellow-800">Yellow</span>
+            <span class="rounded-full w-8 h-8 bg-yellow-600"></span>
+        </span>
+
+        <span data-main="oklch(44.6% 0.03 256.802)" data-text="oklch(27.8% 0.033 256.848)"
+              class="change-theme-btn bg-white text-sm sm:text-base lg:text-lg 2xl:text-xl cursor-pointer text-black shadow-2xl shadow-black/50 font-semibold tracking-wide rounded-full flex items-center justify-between gap-x-1.5 py-1 px-2.5">
+            <span class="text-gray-800">Gray</span>
+            <span class="rounded-full w-8 h-8 bg-gray-600"></span>
+        </span>
+
+        <span data-main="oklch(54.1% 0.281 293.009)" data-text="oklch(43.2% 0.232 292.759)"
+              class="change-theme-btn bg-white text-sm sm:text-base lg:text-lg 2xl:text-xl cursor-pointer text-black shadow-2xl shadow-black/50 font-semibold tracking-wide rounded-full flex items-center justify-between gap-x-1.5 py-1 px-2.5">
+            <span class="text-(--text-main)">Violet</span>
+            <span class="rounded-full w-8 h-8 bg-violet-600"></span>
+        </span>
+
+        <span data-main="oklch(64.6% 0.222 41.116)" data-text="oklch(47% 0.157 37.304)"
+              class="change-theme-btn bg-white text-sm sm:text-base lg:text-lg 2xl:text-xl cursor-pointer text-black shadow-2xl shadow-black/50 font-semibold tracking-wide rounded-full flex items-center justify-between gap-x-1.5 py-1 px-2.5">
+            <span class="text-orange-800">Orange</span>
+            <span class="rounded-full w-8 h-8 bg-orange-600"></span>
+        </span>
+
+        <span data-main="oklch(60% 0.118 184.704)" data-text="oklch(43.7% 0.078 188.216)"
+              class="change-theme-btn bg-white text-sm sm:text-base lg:text-lg 2xl:text-xl cursor-pointer text-black shadow-2xl shadow-black/50 font-semibold tracking-wide rounded-full flex items-center justify-between gap-x-1.5 py-1 px-2.5">
+            <span class="text-teal-800">Teal</span>
+            <span class="rounded-full w-8 h-8 bg-teal-600"></span>
+        </span>
+    </div>
+
+</div>
+
+<!-- App Name -->
+<div class="font-semibold text-white px-2">
+    <span class="text-2xl sm:text-3xl lg:text-4xl 2xl:text-5xl">Wordly</span>
+    <span class="text-2xl sm:text-3xl lg:text-4xl 2xl:text-5xl"> | </span>
+    <span id="header-info"
+          class="inline-block transition-all duration-500 transform hide-header-info text-lg sm:text-xl lg:text-2xl 2xl:text-3xl">Fast & Smart Word Translation</span>
+</div>
+
+<!-- Search Section -->
+<section id="search-section"
+        class="bg-white transition duration-200 relative rounded-2xl w-5/6 sm:w-4/5 md:w-3/4 lg:w-2/3 xl:w-1/2 p-2.5 flex flex-col items-center gap-y-3">
+    <input id="search-word" autocomplete="off"
+           class="w-full h-16 lg:h-20 text-base sm:text-lg lg:text-xl 2xl:text-2xl font-semibold transition-all duration-300 transform outline-0 border-[3px] border-(--text-main) capitalize rounded-2xl pl-3 pr-14 text-(--text-main) placeholder:text-(--text-main)/90 placeholder:font-normal focus:bg-(--bg-main)/10"
+           placeholder="Search For Any Word :)">
+    <svg id="clear-input-btn"
+         class="hide transition-all absolute cursor-pointer w-8 h-8 min-w-8 min-h-8 top-7 lg:top-8 right-7 text-(--text-main) z-10">
+        <use href="#x-mark"></use>
+    </svg>
+
+    <button id="search-btn"
+            class="p-3 lg:p-4 w-1/3 rounded-2xl transition-all cursor-pointer text-base sm:text-lg lg:text-xl 2xl:text-2xl border-[3px] border-(--text-main) text-(--text-main) active:bg-(--bg-main)/30 hover:bg-(--bg-main)/10">
+        Let's Go
+    </button>
+</section>
+
+<!-- Show Result Modal -->
+<section id="show-result-page"
+         class="hide-animation transition duration-200 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-7/8 sm:w-4/5 md:w-3/4 lg:w-2/3 max-h-[700px] grid place-items-center my-16 p-3 rounded-2xl z-20 bg-white overflow-y-auto">
+    <!--    Result Success Holder    -->
+    <div id="result-holder" class="hidden w-full">
+        <!--  Result Header  -->
+        <div class="w-full text-(--text-main) text-2xl sm:text-3xl lg:text-4xl 2xl:text-5xl pb-2 border-b-2 border-dashed border-(--bg-main) flex items-center justify-between">
+        <span class="font-bold flex items-end justify-center gap-x-2.5">
+            <span class="capitalize" id="word">Hello</span>
+            <svg id="play-audio" title="Play Audio"
+                 class="lg:w-9 lg:h-9 w-7 h-7 cursor-pointer fill-transparent transition duration-200 hover:fill-(--bg-main)/30"><use
+                    href="#play-sound"></use></svg>
+            <span id="parts-of-speech"
+                  class="flex items-center justify-center gap-x-1.5 *:hover:bg-(--bg-main)/20 *:hover:transition *:hover:duration-200 *:cursor-context-menu *:p-1 lg:*:p-1.5 *:capitalize *:border-2 *:border-(--bg-main) *:rounded-xl *:text-(--text-main) *:text-sm">
+                <span>verb</span>
+                <span>noun</span>
+                <span>interjection</span>
+            </span>
+        </span>
+            <svg id="close-result-modal" class="w-8 h-8 lg:w-10 lg:h-10 cursor-pointer">
+                <use href="#x-mark"></use>
+            </svg>
+        </div>
+
+        <!--  Result Main  -->
+        <div id="result-main-div" class="w-full mt-5">
+            <div class="flex flex-col items-start justify-center gap-y-2.5 pb-2 border-b-2 border-b-(--bg-main) border-dashed">
+
+                <div class="capitalize p-1 text-(--text-main) font-bold text-base sm:text-lg lg:text-xl 2xl:text-2xl">
+                    Noun:
+                </div>
+                <ul id="list-of-meanings" class="space-y-2 pl-5 text-xl">
+                    <li class="flex flex-col items-start justify-center gap-y-1">
+                        <span class="text-(--text-main)/70 font-semibold">"Hello!" or an equivalent greeting.</span>
+                        <span class="pl-6 text-xs sm:text-sm lg:text-base 2xl:text-lg text-black/70 font-medium">Example: or an equivalent greeting.</span>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+
+        <!--  Result Footer  -->
+        <div class="w-full mt-5 space-y-3 text-xs sm:text-sm lg:text-base 2xl:text-lg">
+            <div id="synonyms" class="flex items-start justify-start gap-x-2">
+                <span class="text-(--text-main) font-semibold">Synonyms: </span>
+                <span id="syn" class="text-(--text-main)/80 font-semibold">To Die Faster</span>
+            </div>
+            <div id="antonyms" class="flex items-start justify-start gap-x-2">
+                <span class="text-(--text-main) font-semibold">Antonyms: </span>
+                <span id="ant" class="text-(--text-main)/80 font-semibold ">shuffle off this mortal coil, to die fast, ali is here. haha hello baby</span>
+            </div>
+        </div>
+    </div>
+
+    <!--  Result - Loading  -->
+    <div id="result-loading" class="hidden w-full overflow-hidden">
+        <div class="flex items-center justify-center gap-x-5 text-lg sm:text-xl lg:text-2xl 2xl:text-3xl p-2 rounded-2xl bg-(--bg-main)/10 text-(--text-main)">
+            <svg class="w-9 h-9 min-w-9 min-h-9 animate-spin">
+                <use href="#progress"></use>
+            </svg>
+            <span>Please Wait While Data Being Loaded Here!</span>
+        </div>
+    </div>
+
+    <!-- Show Result Error -->
+    <div id="show-result-error" class="hidden w-full overflow-hidden">
+        <div class="flex items-center justify-between gap-x-8 text-lg sm:text-xl lg:text-2xl 2xl:text-3xl p-2 rounded-2xl bg-(--bg-main)/10 text-(--text-main)">
+            <div class="w-max flex items-center justify-center gap-x-5">
+                <svg class="w-9 h-9 min-w-9 min-h-9">
+                    <use href="#error"></use>
+                </svg>
+                <span>Ops! Sorry, No Meaning Found For <span id="searched-word-error"
+                                                             class="font-Mono font-semibold capitalize max-w-4/5">"Roboto Mono"</span></span>
+            </div>
+            <svg id="close-modal-error" class="w-9 h-9 min-w-9 min-h-9 cursor-pointer">
+                <use href="#x-mark"></use>
+            </svg>
+        </div>
+    </div>
+
+</section>
+
+
+</body>
+</html>

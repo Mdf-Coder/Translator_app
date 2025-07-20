@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+@font-face {
+    font-family: 'Exo2';
+    src: url("./fonts/Exo2-Regular.ttf");
+}
+@font-face {
+    font-family: 'Mono';
+    src: url("./fonts/RobotoMono-VariableFont_wght.ttf");
+}
+
+:root{
+    --bg-main: oklch(54.1% 0.281 293.009);
+    --text-main: oklch(43.2% 0.232 292.759);
+}
+
+
+
+/* Add Costume Styles Here */
+@layer components {
+
+    .font-Exo-2 {
+        font-family: "Exo2", serif;
+    }
+
+    .font-Mono {
+        font-family: "Mono", serif;
+    }
+
+    .hide {
+        @apply invisible opacity-0
+    }
+
+    .hide-animation{
+        @apply invisible opacity-0 scale-y-0
+    }
+
+    .hide-header-info {
+        @apply -translate-y-24 scale-0 opacity-0 invisible
+    }
+
+    .hide-app-theme-modal {
+        @apply scale-0 opacity-0 invisible
+    }
+
+    .no-audio-found{
+        @apply text-gray-500/50
+    }
+
+}
