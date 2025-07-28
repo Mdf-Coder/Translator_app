@@ -129,7 +129,7 @@
 
 <!-- Search Section -->
 <section id="search-section"
-        class="bg-white transition duration-200 relative rounded-2xl w-5/6 sm:w-4/5 md:w-3/4 lg:w-2/3 xl:w-1/2 p-2.5 flex flex-col items-center gap-y-3">
+        class="bg-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition duration-200 rounded-2xl w-5/6 sm:w-4/5 md:w-3/4 lg:w-2/3 xl:w-1/2 p-2.5 flex flex-col items-center gap-y-3">
     <input id="search-word" autocomplete="off"
            class="w-full h-16 lg:h-20 text-base sm:text-lg lg:text-xl 2xl:text-2xl font-semibold transition-all duration-300 transform outline-0 border-[3px] border-(--text-main) capitalize rounded-2xl pl-3 pr-14 text-(--text-main) placeholder:text-(--text-main)/90 placeholder:font-normal focus:bg-(--bg-main)/10"
            placeholder="Search For Any Word :)">
@@ -152,18 +152,15 @@
         <!--  Result Header  -->
         <div class="w-full text-(--text-main) text-2xl sm:text-3xl lg:text-4xl 2xl:text-5xl pb-2 border-b-2 border-dashed border-(--bg-main) flex items-center justify-between">
         <span class="font-bold flex items-end justify-center gap-x-2.5">
-            <span class="capitalize" id="word">Hello</span>
+            <span class="capitalize" id="word"></span>
             <svg id="play-audio" title="Play Audio"
                  class="lg:w-9 lg:h-9 w-7 h-7 cursor-pointer fill-transparent transition duration-200 hover:fill-(--bg-main)/30"><use
                     href="#play-sound"></use></svg>
             <span id="parts-of-speech"
                   class="flex items-center justify-center gap-x-1.5 *:hover:bg-(--bg-main)/20 *:hover:transition *:hover:duration-200 *:cursor-context-menu *:p-1 lg:*:p-1.5 *:capitalize *:border-2 *:border-(--bg-main) *:rounded-xl *:text-(--text-main) *:text-sm">
-                <span>verb</span>
-                <span>noun</span>
-                <span>interjection</span>
             </span>
         </span>
-            <svg id="close-result-modal" class="w-8 h-8 lg:w-10 lg:h-10 cursor-pointer">
+            <svg id="close-result-modal" class="fixed top-3 right-2 w-8 h-8 lg:w-10 lg:h-10 cursor-pointer">
                 <use href="#x-mark"></use>
             </svg>
         </div>
@@ -176,24 +173,21 @@
                     Noun:
                 </div>
                 <ul id="list-of-meanings" class="space-y-2 pl-5 text-xl">
-                    <li class="flex flex-col items-start justify-center gap-y-1">
-                        <span class="text-(--text-main)/70 font-semibold">"Hello!" or an equivalent greeting.</span>
-                        <span class="pl-6 text-xs sm:text-sm lg:text-base 2xl:text-lg text-black/70 font-medium">Example: or an equivalent greeting.</span>
-                    </li>
+                    <li class="flex flex-col items-start justify-center gap-y-1"></li>
                 </ul>
 
             </div>
         </div>
 
         <!--  Result Footer  -->
-        <div class="w-full mt-5 space-y-3 text-xs sm:text-sm lg:text-base 2xl:text-lg">
+        <div class="w-full mt-5 pb-5 space-y-3 text-xs sm:text-sm lg:text-base 2xl:text-lg">
             <div id="synonyms" class="flex items-start justify-start gap-x-2">
                 <span class="text-(--text-main) font-semibold">Synonyms: </span>
-                <span id="syn" class="text-(--text-main)/80 font-semibold">To Die Faster</span>
+                <span id="syn" class="text-(--text-main)/80 font-semibold"></span>
             </div>
             <div id="antonyms" class="flex items-start justify-start gap-x-2">
                 <span class="text-(--text-main) font-semibold">Antonyms: </span>
-                <span id="ant" class="text-(--text-main)/80 font-semibold ">shuffle off this mortal coil, to die fast, ali is here. haha hello baby</span>
+                <span id="ant" class="text-(--text-main)/80 font-semibold "></span>
             </div>
         </div>
     </div>
