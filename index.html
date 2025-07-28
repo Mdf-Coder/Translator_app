@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./src/style.css">
     <script type="module" src="src/script.js" defer></script>
 </head>
-<body class="bg-(--bg-main) transition relative w-full h-dvh grid place-items-center font-Exo-2 overflow-hidden">
+<body class="bg-(--bg-main) transition relative w-full text-center h-dvh font-Exo-2 overflow-hidden">
 
 <!-- SVGs-->
 <symbol class="hidden">
@@ -120,7 +120,7 @@
 </div>
 
 <!-- App Name -->
-<div class="font-semibold text-white px-2">
+<div class="font-semibold text-white fixed top-24 inset-x-0">
     <span class="text-2xl sm:text-3xl lg:text-4xl 2xl:text-5xl">Wordly</span>
     <span class="text-2xl sm:text-3xl lg:text-4xl 2xl:text-5xl"> | </span>
     <span id="header-info"
@@ -146,7 +146,7 @@
 
 <!-- Show Result Modal -->
 <section id="show-result-page"
-         class="hide-animation transition duration-200 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-7/8 sm:w-4/5 md:w-3/4 lg:w-2/3 max-h-[700px] grid place-items-center my-16 p-3 rounded-2xl z-20 bg-white overflow-y-auto">
+         class="hide-animation text-left transition duration-200 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-7/8 sm:w-4/5 md:w-3/4 lg:w-2/3 max-h-[700px] grid place-items-center my-16 p-3 rounded-2xl z-20 bg-white overflow-y-auto">
     <!--    Result Success Holder    -->
     <div id="result-holder" class="hidden w-full">
         <!--  Result Header  -->
